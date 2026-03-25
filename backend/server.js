@@ -5,9 +5,14 @@ import { createServer } from 'http';
 import { exec, spawn } from 'child_process';
 import { promisify } from 'util';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import fs from 'fs/promises';
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
+
+// ES module compatibility
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import { v4 as uuidv4 } from 'uuid';
 import store from './store.js';
 
@@ -67,13 +72,30 @@ app.get('/api/health', (req, res) => {
 app.use('/api', authMiddleware);
 
 // ============================================================================
+// STATIC FILES (Frontend)
+// ============================================================================
+const STATIC_DIR = path.join(__dirname, 'dist');
+app.use(express.static(STATIC_DIR));
+
+// Serve index.html for all other routes (SPA)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(STATIC_DIR, 'index.html'));
+});
+
+// ============================================================================
 // CONFIG
 // ============================================================================
 const WORKSPACE = process.env.HOME + '/clawd-main';
-const PROJECTS_DIR = process.env.HOME + '/clawd-main/dashboard/projects';
+const PROJECTS_DIR = '/Users/kamil/Developer/clawProjects';
 const AGENTS_DIR = process.env.HOME + '/clawd/agents';
-const STITCH_API_KEY = process.env.STITCH_API_KEY || 'AIzaSyBptbCCsyGQTIi6MWqhRnz4X-eGvOHK0AE';
 const STITCH_MCP_URL = 'https://stitch.googleapis.com/mcp';
+const GCLOUD_PROJECT = process.env.GCLOUD_PROJECT || 'polar-reef-443122-i5';
+
+// Get fresh OAuth token from gcloud
+async function getGcloudToken() {
+  const { stdout } = await execAsync('gcloud auth print-access-token');
+  return stdout.trim();
+}
 
 app.use('/static/projects', express.static(PROJECTS_DIR));
 
@@ -98,11 +120,14 @@ function broadcast(type, data) {
 let stitchReqId = 1;
 
 async function stitchCall(toolName, args = {}) {
+  const accessToken = await getGcloudToken();
+  
   const response = await fetch(STITCH_MCP_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-Goog-Api-Key': STITCH_API_KEY
+      'Authorization': `Bearer ${accessToken}`,
+      'X-Goog-User-Project': GCLOUD_PROJECT
     },
     body: JSON.stringify({
       jsonrpc: '2.0',
@@ -146,7 +171,7 @@ const stitchClient = {
       projectId,
       prompt,
       deviceType: 'MOBILE',
-      modelId: 'GEMINI_2_5_PRO'
+      modelId: 'GEMINI_3_1_PRO'
     });
     
     const outputs = genResult.outputComponents || [];
@@ -190,6 +215,235 @@ const stitchClient = {
     }
     
     return { screenshot, html };
+  }
+};
+
+// ============================================================================
+// IOS PROJECT GENERATOR (XcodeGen)
+// ============================================================================
+const iosProjectGenerator = {
+  async createProject(projectName, screens = [], features = [], description = '') {
+    const projectPath = path.join(PROJECTS_DIR, projectName);
+    const sourcesPath = path.join(projectPath, 'Sources');
+    const assetsPath = path.join(projectPath, 'Sources', 'Assets.xcassets');
+    const designsPath = path.join(projectPath, 'designs');
+    
+    // Create directories
+    await fs.mkdir(sourcesPath, { recursive: true });
+    await fs.mkdir(assetsPath, { recursive: true });
+    await fs.mkdir(path.join(assetsPath, 'AppIcon.appiconset'), { recursive: true });
+    await fs.mkdir(path.join(assetsPath, 'AccentColor.colorset'), { recursive: true });
+    await fs.mkdir(designsPath, { recursive: true });
+    
+    const bundleId = `com.claw.${projectName.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+    
+    // XcodeGen project.yml
+    const projectYml = `name: ${projectName}
+options:
+  bundleIdPrefix: com.claw
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: en
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    GENERATE_INFOPLIST_FILE: YES
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+    INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+    INFOPLIST_KEY_UILaunchScreen_Generation: YES
+    INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait"
+    INFOPLIST_KEY_CFBundleDisplayName: "${projectName}"
+
+targets:
+  ${projectName}:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+        excludes:
+          - "**/.DS_Store"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ${bundleId}
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+`;
+
+    // App entry point
+    const appSwift = `import SwiftUI
+
+@main
+struct ${projectName}App: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
+`;
+
+    // ContentView with TabView if multiple screens
+    const screenViews = screens.map(s => s.name || s).filter(Boolean);
+    const hasMultipleScreens = screenViews.length > 1;
+    
+    let contentViewSwift;
+    if (hasMultipleScreens) {
+      const tabs = screenViews.slice(0, 5).map((name, i) => {
+        const icon = i === 0 ? 'house.fill' : i === 1 ? 'list.bullet' : i === 2 ? 'gear' : i === 3 ? 'person.fill' : 'star.fill';
+        return `            ${name.replace(/[^a-zA-Z0-9]/g, '')}View()
+                .tabItem {
+                    Label("${name}", systemImage: "${icon}")
+                }`;
+      }).join('\n');
+      
+      contentViewSwift = `import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        TabView {
+${tabs}
+        }
+    }
+}
+
+#Preview {
+    ContentView()
+}
+`;
+    } else {
+      contentViewSwift = `import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        NavigationStack {
+            ${screenViews[0]?.replace(/[^a-zA-Z0-9]/g, '') || 'Home'}View()
+        }
+    }
+}
+
+#Preview {
+    ContentView()
+}
+`;
+    }
+
+    // Generate view files for each screen
+    const viewFiles = {};
+    for (const screenName of screenViews) {
+      const safeName = screenName.replace(/[^a-zA-Z0-9]/g, '');
+      viewFiles[`${safeName}View.swift`] = `import SwiftUI
+
+struct ${safeName}View: View {
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 20) {
+                // TODO: Implement ${screenName} UI from design
+                Text("${screenName}")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                Text("Implement this screen based on the generated design")
+                    .foregroundStyle(.secondary)
+            }
+            .padding()
+        }
+        .navigationTitle("${screenName}")
+    }
+}
+
+#Preview {
+    NavigationStack {
+        ${safeName}View()
+    }
+}
+`;
+    }
+
+    // Assets catalog
+    const contentsJson = `{
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}`;
+
+    const appIconContents = `{
+  "images": [
+    { "idiom": "universal", "platform": "ios", "size": "1024x1024" }
+  ],
+  "info": { "author": "xcode", "version": 1 }
+}`;
+
+    const accentColorContents = `{
+  "colors": [
+    {
+      "color": { "color-space": "srgb", "components": { "red": "0.039", "green": "0.518", "blue": "1.000", "alpha": "1.000" } },
+      "idiom": "universal"
+    }
+  ],
+  "info": { "author": "xcode", "version": 1 }
+}`;
+
+    // Write all files
+    await fs.writeFile(path.join(projectPath, 'project.yml'), projectYml);
+    await fs.writeFile(path.join(sourcesPath, `${projectName}App.swift`), appSwift);
+    await fs.writeFile(path.join(sourcesPath, 'ContentView.swift'), contentViewSwift);
+    
+    for (const [filename, content] of Object.entries(viewFiles)) {
+      await fs.writeFile(path.join(sourcesPath, filename), content);
+    }
+    
+    await fs.writeFile(path.join(assetsPath, 'Contents.json'), contentsJson);
+    await fs.writeFile(path.join(assetsPath, 'AppIcon.appiconset', 'Contents.json'), appIconContents);
+    await fs.writeFile(path.join(assetsPath, 'AccentColor.colorset', 'Contents.json'), accentColorContents);
+
+    // Project metadata
+    const projectJson = {
+      name: projectName,
+      bundleId,
+      description,
+      features,
+      screens: screenViews,
+      createdAt: new Date().toISOString(),
+      platform: 'iOS',
+      swiftVersion: '6.0',
+      deploymentTarget: '17.0'
+    };
+    await fs.writeFile(path.join(projectPath, 'project.json'), JSON.stringify(projectJson, null, 2));
+
+    // Run XcodeGen
+    try {
+      await execAsync(`cd "${projectPath}" && xcodegen generate`, { timeout: 30000 });
+      console.log(`✅ Created Xcode project: ${projectName}.xcodeproj`);
+      return { 
+        success: true, 
+        xcodeProject: path.join(projectPath, `${projectName}.xcodeproj`),
+        projectPath 
+      };
+    } catch (e) {
+      console.error('XcodeGen failed:', e.message);
+      return { 
+        success: false, 
+        error: e.message,
+        projectPath 
+      };
+    }
+  },
+
+  async openInXcode(projectPath, projectName) {
+    try {
+      await execAsync(`open "${path.join(projectPath, `${projectName}.xcodeproj`)}"`);
+      return { success: true };
+    } catch (e) {
+      return { success: false, error: e.message };
+    }
   }
 };
 
@@ -460,44 +714,26 @@ Style: Modern dark mode iOS app, SF Pro font, clean minimal design, proper iOS s
 
 async function runScaffold(pipelineId) {
   const pipeline = activePipelines.get(pipelineId);
-  pipelineLog(pipelineId, 'ios-dev', '🍎 Creating iOS project scaffold...');
-  emitAgentStatus('ios-dev', 'working', 'Creating project structure');
-  
-  const projectPath = path.join(PROJECTS_DIR, pipeline.projectName);
-  await fs.mkdir(projectPath, { recursive: true });
+  pipelineLog(pipelineId, 'ios-dev', '🍎 Creating iOS project with XcodeGen...');
+  emitAgentStatus('ios-dev', 'working', 'Creating Xcode project');
   
   try {
     const screenNames = pipeline.design.screens.map(s => s.name);
     
-    const prompt = `Create a buildable iOS SwiftUI project at: ${projectPath}
-
-App: ${pipeline.projectName}
-Screens: ${screenNames.join(', ')}
-Features: ${pipeline.config.features.join(', ')}
-Description: ${pipeline.config.appDescription}
-
-Requirements:
-1. Create proper Xcode project with .xcodeproj
-2. Placeholder SwiftUI views for each screen (with TODO: implement UI comments)
-3. Set up TabView or NavigationStack navigation
-4. Create data models and service stubs
-5. Must compile and run on iOS 17+ simulator
-6. Use Swift 5.9+ modern patterns
-
-Create all files now. UI will be implemented from designs later.`;
-
-    await agentExecutor.chat('ios-dev', prompt, pipeline.projectName);
-    
-    const { stdout } = await agentExecutor.exec(
-      `find "${projectPath}" -maxdepth 3 -name "*.xcodeproj" | head -1`
+    const result = await iosProjectGenerator.createProject(
+      pipeline.projectName,
+      screenNames,
+      pipeline.config.features,
+      pipeline.config.appDescription
     );
     
-    if (stdout) {
-      pipeline.development.xcodeProject = stdout;
+    if (result.success) {
+      pipeline.development.xcodeProject = result.xcodeProject;
       pipeline.development.status = 'scaffold';
-      pipelineLog(pipelineId, 'ios-dev', `✅ Created: ${path.basename(stdout)}`);
+      pipelineLog(pipelineId, 'ios-dev', `✅ Created: ${pipeline.projectName}.xcodeproj`);
+      pipelineLog(pipelineId, 'ios-dev', `📁 Path: ${result.projectPath}`);
     } else {
-      pipelineLog(pipelineId, 'ios-dev', '⚠️ No .xcodeproj found');
+      pipelineLog(pipelineId, 'ios-dev', `⚠️ XcodeGen failed: ${result.error}`);
     }
     
     emitAgentStatus('ios-dev', 'idle');

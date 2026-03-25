@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-tertiary-fixed": "#351000",
+            "on-surface": "#e5e2e3",
+            "primary-fixed-dim": "#adc6ff",
+            "surface-dim": "#131314",
+            "outline-variant": "#414755",
+            "on-secondary-fixed": "#001a41",
+            "secondary-fixed-dim": "#adc6ff",
+            "on-secondary": "#082f65",
+            "surface-container-low": "#1c1b1c",
+            "on-primary-container": "#00285c",
+            "inverse-primary": "#005bc1",
+            "inverse-surface": "#e5e2e3",
+            "on-tertiary-container": "#4c1a00",
+            "primary-fixed": "#d8e2ff",
+            "tertiary": "#ffb595",
+            "surface-container": "#201f20",
+            "surface": "#131314",
+            "secondary": "#adc6ff",
+            "primary-container": "#4b8eff",
+            "error": "#ffb4ab",
+            "tertiary-fixed-dim": "#ffb595",
+            "outline": "#8b90a0",
+            "error-container": "#93000a",
+            "surface-bright": "#3a393a",
+            "tertiary-fixed": "#ffdbcc",
+            "on-tertiary-fixed-variant": "#7c2e00",
+            "surface-container-highest": "#353436",
+            "secondary-container": "#26467d",
+            "on-surface-variant": "#c1c6d7",
+            "on-secondary-container": "#98b5f3",
+            "on-primary-fixed-variant": "#004493",
+            "surface-tint": "#adc6ff",
+            "inverse-on-surface": "#313031",
+            "background": "#131314",
+            "on-tertiary": "#571e00",
+            "surface-variant": "#353436",
+            "tertiary-container": "#ef6719",
+            "on-secondary-fixed-variant": "#26467d",
+            "on-primary": "#002e69",
+            "on-background": "#e5e2e3",
+            "on-error-container": "#ffdad6",
+            "on-error": "#690005",
+            "secondary-fixed": "#d8e2ff",
+            "on-primary-fixed": "#001a41",
+            "surface-container-high": "#2a2a2b",
+            "surface-container-lowest": "#0e0e0f",
+            "primary": "#adc6ff"
+          },
+          fontFamily: {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      background-color: #0e0e0f; /* surface-container-lowest for that deep obsidian feel */
+      color: #e5e2e3;
+      font-family: 'Inter', sans-serif;
+    }
+    .ios-switch {
+      position: relative;
+      display: inline-block;
+      width: 51px;
+      height: 31px;
+    }
+    .ios-switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #353436;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 27px;
+      width: 27px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+    input:checked + .slider { background-color: #adc6ff; }
+    input:checked + .slider:before { transform: translateX(20px); }
+    
+    .glass-nav {
+      background: rgba(53, 52, 54, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen pb-32">
+<!-- TopAppBar Section -->
+<header class="w-full sticky top-0 z-50 bg-[#131314] dark:bg-[#131314]">
+<div class="flex items-center px-6 py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#ADC6FF] cursor-pointer active:scale-95 transition-transform" data-icon="arrow_back_ios">arrow_back_ios</span>
+<h1 class="text-[#ADC6FF] font-['Inter'] font-bold text-[2rem] tracking-tight">Settings</h1>
+</div>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-6 mt-8 space-y-10">
+<!-- User Profile Anchor Card (Extra High-End Detail) -->
+<section class="flex items-center gap-6 p-6 bg-surface-container-low rounded-xl">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="portrait of a professional woman with soft studio lighting and dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWTgbAByPXygcwquobwP6DdTUSVvfDSB9EawHzGeQArhHwozaa95o_fD1y-j8_Xc83qcMbqNmQlQDTmoK-aZXY74s8QhH37jaLUmN96fTA8WFKeN7NRquz5ILulcvybnhbQq81N4JkDRooUktsKIMJDpTCTCX5JhhVdSaiTDM4fc2cKZXFnD1SMZva3SoDHbzXo9XFzCxfCEE8feeYnW1plPZcWnFwC2xzpcbSIEX5l0l-h0Cy6c1X1FIwBUBuTueq-9H7st96Ta0V"/>
+</div>
+<div>
+<h2 class="text-on-surface font-bold text-xl">Alex Rivera</h2>
+<p class="text-on-surface-variant text-sm">Apple ID, iCloud+, Media &amp; Purchases</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-outline" data-icon="chevron_right">chevron_right</span>
+</section>
+<!-- Section APPEARANCE -->
+<section>
+<h3 class="px-4 mb-2 text-[0.75rem] font-bold tracking-widest text-[#C1C6D7] opacity-60 uppercase">Appearance</h3>
+<div class="bg-surface-container-low rounded-xl overflow-hidden">
+<div class="flex items-center justify-between px-5 py-4 hover:bg-surface-container-highest transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-[#ADC6FF]" data-icon="dark_mode" style="font-variation-settings: 'FILL' 1;">dark_mode</span>
+</div>
+<span class="text-on-surface font-medium">Dark Mode</span>
+</div>
+<label class="ios-switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+</div>
+</section>
+<!-- Section TASKS -->
+<section>
+<h3 class="px-4 mb-2 text-[0.75rem] font-bold tracking-widest text-[#C1C6D7] opacity-60 uppercase">Tasks</h3>
+<div class="bg-surface-container-low rounded-xl overflow-hidden">
+<!-- Row 1 -->
+<div class="flex items-center justify-between px-5 py-4 hover:bg-surface-container-highest transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-[#ADC6FF]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="text-on-surface font-medium">Show Completed Tasks</span>
+</div>
+<label class="ios-switch">
+<input checked="" type="checkbox"/>
+<span class="slider"></span>
+</label>
+</div>
+<!-- Spacer fallback instead of border -->
+<div class="h-[1px] mx-5 bg-outline-variant opacity-15"></div>
+<!-- Row 2 -->
+<div class="flex items-center justify-between px-5 py-4 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 flex items-center justify-center bg-error-container/20 rounded-lg">
+<span class="material-symbols-outlined text-error" data-icon="delete" style="font-variation-settings: 'FILL' 1;">delete</span>
+</div>
+<span class="text-error font-medium">Clear Completed</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Section ABOUT -->
+<section>
+<h3 class="px-4 mb-2 text-[0.75rem] font-bold tracking-widest text-[#C1C6D7] opacity-60 uppercase">About</h3>
+<div class="bg-surface-container-low rounded-xl overflow-hidden">
+<!-- Row 1: Version -->
+<div class="flex items-center justify-between px-5 py-4 hover:bg-surface-container-highest transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-[#ADC6FF]" data-icon="info" style="font-variation-settings: 'FILL' 1;">info</span>
+</div>
+<span class="text-on-surface font-medium">Version</span>
+</div>
+<span class="text-on-surface-variant font-medium">1.0.0</span>
+</div>
+<div class="h-[1px] mx-5 bg-outline-variant opacity-15"></div>
+<!-- Row 2: Rate App -->
+<div class="flex items-center justify-between px-5 py-4 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-[#ADC6FF]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-on-surface font-medium">Rate App</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="h-[1px] mx-5 bg-outline-variant opacity-15"></div>
+<!-- Row 3: Send Feedback -->
+<div class="flex items-center justify-between px-5 py-4 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 flex items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-[#ADC6FF]" data-icon="mail" style="font-variation-settings: 'FILL' 1;">mail</span>
+</div>
+<span class="text-on-surface font-medium">Send Feedback</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Storage Usage Bento (High-End Editorial Element) -->
+<section class="grid grid-cols-2 gap-4">
+<div class="col-span-2 bg-surface-container p-6 rounded-xl flex flex-col justify-between h-40">
+<div>
+<span class="text-[0.65rem] font-bold tracking-widest text-[#C1C6D7] opacity-60 uppercase">Storage Usage</span>
+<h4 class="text-2xl font-bold mt-1">12.4 GB <span class="text-sm font-normal text-on-surface-variant">of 128 GB used</span></h4>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[10%] rounded-full"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Section -->
+<nav class="fixed bottom-0 left-0 w-full glass-nav flex justify-around items-center px-6 pb-8 pt-3 z-50 shadow-[0px_-4px_16px_rgba(0,0,0,0.3)] border-t border-[#414755]/15">
+<!-- Home Tab -->
+<a class="flex flex-col items-center justify-center text-[#C1C6D7] opacity-60 hover:opacity-100 transition-opacity active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] text-[0.75rem] font-medium tracking-wide mt-1">Home</span>
+</a>
+<!-- Tasks Tab -->
+<a class="flex flex-col items-center justify-center text-[#C1C6D7] opacity-60 hover:opacity-100 transition-opacity active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+<span class="font-['Inter'] text-[0.75rem] font-medium tracking-wide mt-1">Tasks</span>
+</a>
+<!-- Settings Tab (ACTIVE) -->
+<a class="flex flex-col items-center justify-center text-[#ADC6FF] bg-[#ADC6FF]/10 rounded-full px-4 py-1 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-['Inter'] text-[0.75rem] font-medium tracking-wide">Settings</span>
+</a>
+<!-- Profile Tab -->
+<a class="flex flex-col items-center justify-center text-[#C1C6D7] opacity-60 hover:opacity-100 transition-opacity active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Inter'] text-[0.75rem] font-medium tracking-wide mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

@@ -671,5 +671,442 @@
     "isPaused": false,
     "isStopped": false,
     "endTime": 1773572851613
+  },
+  {
+    "id": "7e92e735-d835-4c6a-8bdf-f6eba613c653",
+    "projectName": "StitchTestApp",
+    "status": "running",
+    "currentStage": "design",
+    "createdAt": "2026-03-25T12:57:10.647Z",
+    "updatedAt": "2026-03-25T12:57:10.647Z",
+    "config": {
+      "appDescription": "A simple todo app with task lists",
+      "features": [
+        "Dark Mode",
+        "Task Lists"
+      ],
+      "screens": [
+        {
+          "name": "Home",
+          "description": "Main screen with task list"
+        }
+      ]
+    },
+    "design": {
+      "stitchProjectId": null,
+      "screens": [
+        {
+          "name": "Task Lists",
+          "description": "Dark theme home screen (#0D0D0F background). Top section: large bold 'My Lists' title in white, '+' button on right to add new list. Below: vertical list of task list cards with dark gray (#1C1C1E) backgrounds, 12px border radius. Each card shows colored circle icon on left, list name in white, task count badge in gray (e.g., '5 tasks'). Swipe left reveals red delete button. Bottom: tab bar with Lists (active, accent color) and Settings icons on dark background.",
+          "status": "pending",
+          "screenshot": null,
+          "html": null,
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Task List Detail",
+          "description": "Dark theme task view (#0D0D0F background). Top navigation: back arrow, list name centered in white, overflow menu (three dots). Progress bar below showing completion percentage with accent color fill. Main content: scrollable task list with dark gray (#1C1C1E) cards. Each task has circular checkbox on left (empty or filled with checkmark), task title in white (strikethrough when complete), optional due date in small gray text. Completed tasks have reduced opacity. Floating action button bottom right: accent color circle with '+' icon to add task. Empty state: illustration with 'No tasks yet' text.",
+          "status": "pending",
+          "screenshot": null,
+          "html": null,
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Add Task",
+          "description": "Dark theme modal sheet (#1C1C1E background). Top: drag indicator, 'New Task' title centered, 'Done' button in accent color. Form fields with darker gray (#2C2C2E) input backgrounds: task title text field with placeholder 'What needs to be done?', optional notes multiline field. Date picker row: calendar icon, 'Due Date' label, chevron to expand inline date picker. Priority selector: three pill buttons (Low, Medium, High) with Medium default selected in accent. Bottom: large 'Add Task' button full width in accent color with white text, 48px height, rounded corners.",
+          "status": "pending",
+          "screenshot": null,
+          "html": null,
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Add List",
+          "description": "Dark theme modal (#1C1C1E background). Drag indicator at top. 'New List' title with 'Save' button in accent. List name text field with dark input background. Icon/color picker section: 6x2 grid of colored circles (red, orange, yellow, green, blue, purple, pink, gray) - tap to select, selected shows checkmark. Below: grid of list icons (home, work, shopping, fitness, personal, star). Preview card at bottom showing how the list will appear with selected color and icon.",
+          "status": "pending",
+          "screenshot": null,
+          "html": null,
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Settings",
+          "description": "Dark theme settings screen (#0D0D0F background). 'Settings' title large at top. Grouped sections with dark gray (#1C1C1E) backgrounds and 12px radius. Section 'Appearance': Dark Mode toggle (always on/locked indicator). Section 'Tasks': 'Show Completed' toggle, 'Default Priority' picker row. Section 'Data': 'Export Tasks' row with chevron, 'Delete All Completed' in red text. Section 'About': app version, rate app link, privacy policy link. All rows have labels in white, secondary text in gray (#8E8E93), toggles use accent color when on.",
+          "status": "pending",
+          "screenshot": null,
+          "html": null,
+          "feedback": null,
+          "version": 1
+        }
+      ],
+      "reviewStatus": "pending"
+    },
+    "development": {
+      "status": "pending",
+      "xcodeProject": null,
+      "implementedScreens": [],
+      "buildStatus": "pending"
+    },
+    "testing": {
+      "status": "pending",
+      "unitTests": {
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      "uiTests": {
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      }
+    },
+    "screenshots": {
+      "status": "pending",
+      "images": []
+    },
+    "logs": [
+      {
+        "timestamp": "2026-03-25T12:57:10.648Z",
+        "source": "pm",
+        "message": "📋 PM analyzing app idea..."
+      },
+      {
+        "timestamp": "2026-03-25T12:57:46.808Z",
+        "source": "pm",
+        "message": "✅ Identified 5 screens"
+      },
+      {
+        "timestamp": "2026-03-25T12:57:46.808Z",
+        "source": "designer",
+        "message": "🎨 Starting design generation..."
+      },
+      {
+        "timestamp": "2026-03-25T12:57:46.809Z",
+        "source": "ios-dev",
+        "message": "🍎 Creating iOS project scaffold..."
+      }
+    ]
+  },
+  {
+    "id": "24a04c24-dffc-424c-8c69-1927e05326bb",
+    "projectName": "TodoAppV2",
+    "status": "running",
+    "currentStage": "review",
+    "createdAt": "2026-03-25T12:58:54.616Z",
+    "updatedAt": "2026-03-25T12:58:54.616Z",
+    "config": {
+      "appDescription": "A simple todo app",
+      "features": [
+        "Dark Mode"
+      ],
+      "screens": [
+        {
+          "name": "Home",
+          "description": "Task list screen"
+        }
+      ]
+    },
+    "design": {
+      "stitchProjectId": "14043115839337744089",
+      "screens": [
+        {
+          "name": "Home",
+          "description": "Dark theme main screen (#0A0A0B background). Top: large bold 'Tasks' title in white left-aligned, circular profile/settings icon on right. Below title: horizontal filter chips - 'All', 'Today', 'Completed' in pill shapes, selected chip has accent blue (#007AFF) background with white text, unselected are dark gray (#1C1C1E) with gray text. Main content: scrollable task list. Each task row has dark card (#1C1C1E) with 12px radius, 16px padding. Left side: circular checkbox (empty circle outline, accent fill with checkmark when done). Center: task text in white, completed tasks show strikethrough with 50% opacity. Right: subtle chevron. Empty state: minimal illustration, 'No tasks yet' in gray, 'Add your first task' subtext. Floating action button: bottom right, 56px accent blue circle with white '+' icon, subtle shadow.",
+          "status": "ready",
+          "screenshot": "/static/projects/TodoAppV2/designs/Home.png",
+          "html": "/static/projects/TodoAppV2/designs/Home.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Add Task",
+          "description": "Dark theme bottom sheet sliding up (#1C1C1E background, top rounded corners 20px). Drag handle: small gray pill centered at top. Input area: large text field with no visible border, white placeholder 'What do you need to do?', 18px font. Below input: horizontal row of quick-action icon buttons - calendar (set date), flag (priority), tag icon - all in gray (#8E8E93), 44px tap targets. Keyboard appears with dark theme. Above keyboard on right: circular send button in accent blue with white arrow/checkmark icon. When date selected, small pill badge appears showing 'Today' or date below input.",
+          "status": "ready",
+          "screenshot": "/static/projects/TodoAppV2/designs/Add_Task.png",
+          "html": "/static/projects/TodoAppV2/designs/Add_Task.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Task Detail",
+          "description": "Dark theme full screen (#0A0A0B background). Top navigation: back arrow on left, overflow menu (three dots) on right for edit/delete. Main content: task title in large white bold text at top. Status section: rounded rectangle (#1C1C1E) with checkbox and 'Mark Complete' label. Details card below (#1C1C1E, 12px radius): rows for 'Due Date' with calendar icon and date value, 'Priority' with flag icon and colored badge (red/orange/gray), 'Notes' section with multiline gray text if present. Each row separated by subtle 1px divider (#2C2C2E). Bottom action: 'Delete Task' text button in red (#FF3B30) centered.",
+          "status": "ready",
+          "screenshot": "/static/projects/TodoAppV2/designs/Task_Detail.png",
+          "html": "/static/projects/TodoAppV2/designs/Task_Detail.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Settings",
+          "description": "Dark theme settings screen (#0A0A0B background). Top: 'Settings' title large bold white. Grouped list sections with dark gray (#1C1C1E) rounded cards. Section 'Appearance': 'Dark Mode' row with toggle switch locked in on position, accent blue color. Section 'Tasks': 'Show Completed Tasks' toggle (default on), 'Clear Completed' row with red text and trash icon. Section 'About': 'Version' row showing '1.0.0' in gray right-aligned, 'Rate App' with star icon, 'Send Feedback' with envelope icon. All section headers in small uppercase gray text (#6C6C70) above each card. Row icons in accent blue, labels in white, secondary values in gray.",
+          "status": "ready",
+          "screenshot": "/static/projects/TodoAppV2/designs/Settings.png",
+          "html": "/static/projects/TodoAppV2/designs/Settings.html",
+          "feedback": null,
+          "version": 1
+        }
+      ],
+      "reviewStatus": "pending"
+    },
+    "development": {
+      "status": "pending",
+      "xcodeProject": null,
+      "implementedScreens": [],
+      "buildStatus": "pending"
+    },
+    "testing": {
+      "status": "pending",
+      "unitTests": {
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      "uiTests": {
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      }
+    },
+    "screenshots": {
+      "status": "pending",
+      "images": []
+    },
+    "logs": [
+      {
+        "timestamp": "2026-03-25T12:58:54.617Z",
+        "source": "pm",
+        "message": "📋 PM analyzing app idea..."
+      },
+      {
+        "timestamp": "2026-03-25T12:59:22.933Z",
+        "source": "pm",
+        "message": "✅ Identified 4 screens"
+      },
+      {
+        "timestamp": "2026-03-25T12:59:22.933Z",
+        "source": "designer",
+        "message": "🎨 Starting design generation..."
+      },
+      {
+        "timestamp": "2026-03-25T12:59:22.934Z",
+        "source": "ios-dev",
+        "message": "🍎 Creating iOS project scaffold..."
+      },
+      {
+        "timestamp": "2026-03-25T12:59:24.239Z",
+        "source": "designer",
+        "message": "🎨 Generating: Home..."
+      },
+      {
+        "timestamp": "2026-03-25T13:01:05.931Z",
+        "source": "designer",
+        "message": "✅ Home design ready"
+      },
+      {
+        "timestamp": "2026-03-25T13:01:05.931Z",
+        "source": "designer",
+        "message": "🎨 Generating: Add Task..."
+      },
+      {
+        "timestamp": "2026-03-25T13:02:16.244Z",
+        "source": "designer",
+        "message": "✅ Add Task design ready"
+      },
+      {
+        "timestamp": "2026-03-25T13:02:16.245Z",
+        "source": "designer",
+        "message": "🎨 Generating: Task Detail..."
+      },
+      {
+        "timestamp": "2026-03-25T13:02:32.984Z",
+        "source": "ios-dev",
+        "message": "❌ Scaffold failed: Command failed: openclaw agent --agent \"ios-dev\" --message \"[Project: TodoAppV2] Create a buildable iOS SwiftUI project at: /Users/kamil/clawd-main/dashboard/projects/TodoAppV2\n\nApp: TodoAppV2\nScreens: Home, Add Task, Task Detail, Settings\nFeatures: Dark Mode\nDescription: A simple todo app\n\nRequirements:\n1. Create proper Xcode project with .xcodeproj\n2. Placeholder SwiftUI views for each screen (with TODO: implement UI comments)\n3. Set up TabView or NavigationStack navigation\n4. Create data models and service stubs\n5. Must compile and run on iOS 17+ simulator\n6. Use Swift 5.9+ modern patterns\n\nCreate all files now. UI will be implemented from designs later.\" --json --timeout 180\n"
+      },
+      {
+        "timestamp": "2026-03-25T13:03:38.338Z",
+        "source": "designer",
+        "message": "✅ Task Detail design ready"
+      },
+      {
+        "timestamp": "2026-03-25T13:03:38.338Z",
+        "source": "designer",
+        "message": "🎨 Generating: Settings..."
+      },
+      {
+        "timestamp": "2026-03-25T13:05:03.449Z",
+        "source": "designer",
+        "message": "✅ Settings design ready"
+      },
+      {
+        "timestamp": "2026-03-25T13:05:03.450Z",
+        "source": "designer",
+        "message": "✅ All designs generated"
+      },
+      {
+        "timestamp": "2026-03-25T13:05:03.450Z",
+        "source": "review",
+        "message": "⏸️ Waiting for design review..."
+      }
+    ]
+  },
+  {
+    "id": "66760028-abfb-4625-a965-346baf092c0d",
+    "projectName": "TodoAppPro",
+    "status": "running",
+    "currentStage": "review",
+    "createdAt": "2026-03-25T13:12:04.334Z",
+    "updatedAt": "2026-03-25T13:12:04.334Z",
+    "config": {
+      "appDescription": "A professional todo app with categories",
+      "features": [
+        "Dark Mode",
+        "Categories",
+        "iCloud Sync"
+      ],
+      "screens": [
+        {
+          "name": "Home",
+          "description": "Main task list with categories"
+        },
+        {
+          "name": "Add Task",
+          "description": "Form to add new task"
+        },
+        {
+          "name": "Settings",
+          "description": "App settings and preferences"
+        }
+      ]
+    },
+    "design": {
+      "stitchProjectId": "270740044473871188",
+      "screens": [
+        {
+          "name": "Home",
+          "description": "Main task list with categories",
+          "status": "ready",
+          "screenshot": "/static/projects/TodoAppPro/designs/Home.png",
+          "html": "/static/projects/TodoAppPro/designs/Home.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Add Task",
+          "description": "Form to add new task",
+          "status": "ready",
+          "screenshot": "/static/projects/TodoAppPro/designs/Add_Task.png",
+          "html": "/static/projects/TodoAppPro/designs/Add_Task.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Settings",
+          "description": "App settings and preferences",
+          "status": "ready",
+          "screenshot": "/static/projects/TodoAppPro/designs/Settings.png",
+          "html": "/static/projects/TodoAppPro/designs/Settings.html",
+          "feedback": null,
+          "version": 1
+        }
+      ],
+      "reviewStatus": "pending"
+    },
+    "development": {
+      "status": "scaffold",
+      "xcodeProject": "/Users/kamil/Developer/clawProjects/TodoAppPro/TodoAppPro.xcodeproj",
+      "implementedScreens": [],
+      "buildStatus": "pending"
+    },
+    "testing": {
+      "status": "pending",
+      "unitTests": {
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      "uiTests": {
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      }
+    },
+    "screenshots": {
+      "status": "pending",
+      "images": []
+    },
+    "logs": [
+      {
+        "timestamp": "2026-03-25T13:12:04.335Z",
+        "source": "pm",
+        "message": "📋 PM analyzing app idea..."
+      },
+      {
+        "timestamp": "2026-03-25T13:13:14.073Z",
+        "source": "pm",
+        "message": "✅ Identified 3 screens"
+      },
+      {
+        "timestamp": "2026-03-25T13:13:14.074Z",
+        "source": "designer",
+        "message": "🎨 Starting design generation..."
+      },
+      {
+        "timestamp": "2026-03-25T13:13:14.075Z",
+        "source": "ios-dev",
+        "message": "🍎 Creating iOS project with XcodeGen..."
+      },
+      {
+        "timestamp": "2026-03-25T13:13:14.125Z",
+        "source": "ios-dev",
+        "message": "✅ Created: TodoAppPro.xcodeproj"
+      },
+      {
+        "timestamp": "2026-03-25T13:13:14.125Z",
+        "source": "ios-dev",
+        "message": "📁 Path: /Users/kamil/Developer/clawProjects/TodoAppPro"
+      },
+      {
+        "timestamp": "2026-03-25T13:13:15.643Z",
+        "source": "designer",
+        "message": "🎨 Generating: Home..."
+      },
+      {
+        "timestamp": "2026-03-25T13:14:58.040Z",
+        "source": "designer",
+        "message": "✅ Home design ready"
+      },
+      {
+        "timestamp": "2026-03-25T13:14:58.040Z",
+        "source": "designer",
+        "message": "🎨 Generating: Add Task..."
+      },
+      {
+        "timestamp": "2026-03-25T13:16:21.513Z",
+        "source": "designer",
+        "message": "✅ Add Task design ready"
+      },
+      {
+        "timestamp": "2026-03-25T13:16:21.514Z",
+        "source": "designer",
+        "message": "🎨 Generating: Settings..."
+      },
+      {
+        "timestamp": "2026-03-25T13:17:43.136Z",
+        "source": "designer",
+        "message": "✅ Settings design ready"
+      },
+      {
+        "timestamp": "2026-03-25T13:17:43.137Z",
+        "source": "designer",
+        "message": "✅ All designs generated"
+      },
+      {
+        "timestamp": "2026-03-25T13:17:43.137Z",
+        "source": "review",
+        "message": "⏸️ Waiting for design review..."
+      }
+    ]
   }
 ]

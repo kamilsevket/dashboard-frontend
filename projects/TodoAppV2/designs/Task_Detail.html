@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Task Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-container": "#98b5f3",
+              "on-tertiary-container": "#4c1a00",
+              "on-primary-fixed": "#001a41",
+              "outline-variant": "#414755",
+              "on-tertiary-fixed-variant": "#7c2e00",
+              "secondary-fixed-dim": "#adc6ff",
+              "error-container": "#93000a",
+              "error": "#ffb4ab",
+              "tertiary-fixed-dim": "#ffb595",
+              "primary-fixed-dim": "#adc6ff",
+              "tertiary-fixed": "#ffdbcc",
+              "surface-dim": "#131314",
+              "surface-container-highest": "#353436",
+              "on-primary-fixed-variant": "#004493",
+              "primary-container": "#4b8eff",
+              "surface-bright": "#3a393a",
+              "on-error": "#690005",
+              "tertiary": "#ffb595",
+              "on-primary-container": "#00285c",
+              "background": "#131314",
+              "secondary": "#adc6ff",
+              "secondary-container": "#26467d",
+              "on-secondary-fixed": "#001a41",
+              "on-primary": "#002e69",
+              "on-secondary": "#082f65",
+              "on-secondary-fixed-variant": "#26467d",
+              "inverse-primary": "#005bc1",
+              "surface-variant": "#353436",
+              "surface-tint": "#adc6ff",
+              "inverse-surface": "#e5e2e3",
+              "on-surface": "#e5e2e3",
+              "on-background": "#e5e2e3",
+              "outline": "#8b90a0",
+              "on-surface-variant": "#c1c6d7",
+              "primary": "#adc6ff",
+              "primary-fixed": "#d8e2ff",
+              "inverse-on-surface": "#313031",
+              "surface-container-lowest": "#0e0e0f",
+              "on-tertiary": "#571e00",
+              "surface-container-high": "#2a2a2b",
+              "surface-container": "#201f20",
+              "secondary-fixed": "#d8e2ff",
+              "surface-container-low": "#1c1b1c",
+              "on-error-container": "#ffdad6",
+              "surface": "#131314",
+              "on-tertiary-fixed": "#351000",
+              "tertiary-container": "#ef6719"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-dim text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#131314]/70 backdrop-blur-xl flex items-center justify-between px-4 h-16 w-full after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-[#414755]/15">
+<button class="flex items-center justify-center p-2 rounded-full text-[#ADC6FF] hover:bg-[#353436]/50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-['Inter'] font-bold text-[1.1rem] tracking-tight text-[#ADC6FF]">Task Details</h1>
+<button class="flex items-center justify-center p-2 rounded-full text-[#ADC6FF] hover:bg-[#353436]/50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</header>
+<main class="pt-24 px-6 max-w-2xl mx-auto space-y-8">
+<!-- Task Header Title -->
+<section class="space-y-2">
+<span class="text-[0.625rem] font-medium tracking-[0.1em] uppercase text-primary/70">Project Alpha</span>
+<h2 class="text-4xl md:text-5xl font-extrabold tracking-tight text-on-surface leading-tight">
+                Redesign Mobile Onboarding Flow
+            </h2>
+</section>
+<!-- Status Section (Interaction Block) -->
+<section class="bg-surface-container-low rounded-2xl p-5 flex items-center justify-between hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-7 h-7 rounded-full border-2 border-outline group-active:scale-90 transition-transform flex items-center justify-center">
+<!-- Checkmark placeholder -->
+</div>
+<span class="text-lg font-medium text-on-surface">Mark Complete</span>
+</div>
+<span class="material-symbols-outlined text-outline opacity-40">chevron_right</span>
+</section>
+<!-- Details Card -->
+<div class="bg-surface-container-low rounded-3xl overflow-hidden shadow-2xl">
+<!-- Row: Due Date -->
+<div class="p-5 flex items-center gap-4 group">
+<div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+</div>
+<div class="flex-1">
+<p class="text-[0.65rem] font-bold uppercase tracking-wider text-on-surface-variant/60 mb-0.5">Due Date</p>
+<p class="text-on-surface font-semibold">October 24, 2023</p>
+</div>
+</div>
+<div class="mx-5 h-[1px] bg-outline-variant/15"></div>
+<!-- Row: Priority -->
+<div class="p-5 flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-tertiary-container/10 flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined" data-icon="flag">flag</span>
+</div>
+<div class="flex-1">
+<p class="text-[0.65rem] font-bold uppercase tracking-wider text-on-surface-variant/60 mb-0.5">Priority</p>
+<div class="flex items-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-tertiary-container text-on-tertiary-container">
+                            High Priority
+                         </span>
+</div>
+</div>
+</div>
+<div class="mx-5 h-[1px] bg-outline-variant/15"></div>
+<!-- Row: Notes -->
+<div class="p-5 space-y-3">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-xl bg-on-surface-variant/10 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notes">notes</span>
+</div>
+<div class="flex-1">
+<p class="text-[0.65rem] font-bold uppercase tracking-wider text-on-surface-variant/60">Notes</p>
+</div>
+</div>
+<div class="pl-14">
+<p class="text-on-surface-variant leading-relaxed text-sm">
+                        Review the current onboarding screens and identify friction points. Need to ensure the "Skip" button is more accessible while highlighting the value proposition clearly. Refer to the Figma file for the latest brand assets.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Attachment/Visual Context (Bento Style) -->
+<section class="grid grid-cols-2 gap-4">
+<div class="aspect-square rounded-3xl bg-surface-container-low overflow-hidden group relative">
+<img class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" data-alt="Modern mobile app interface design mockups on a dark table with soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5KzBBES_zQEmIEHCh3umBgwub4eM3M6p9xTfkJ3jaj3scpJKrMQCL5bvbOIsBtZ5h39iJt2r2QLCOc8uJSFR0frqYedRUDRE2W-Qv81F-frCKVw8YKcd3O9W8A4NNF_MmbGqBfefA3f9hUy1hJ7zAuMIpKCNsklvjgAzaMlPtxbLyKrID_-qKDjHeDQo0SZ2iqw3BY5AqiqnMZsItvvFz0cjBncKds5bKNAoD3xZK1pQDMnnqX5IsTv6syKEjEM59cb0VRF6llYRy"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent opacity-40"></div>
+<div class="absolute bottom-4 left-4">
+<span class="text-[10px] font-bold uppercase text-white bg-black/40 backdrop-blur-md px-2 py-1 rounded">Design Specs</span>
+</div>
+</div>
+<div class="bg-primary/10 rounded-3xl p-6 flex flex-col justify-between border border-primary/20">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="attach_file">attach_file</span>
+<div>
+<h4 class="text-primary font-bold text-lg">Onboarding_V2.pdf</h4>
+<p class="text-primary/60 text-xs">2.4 MB • Added yesterday</p>
+</div>
+</div>
+</section>
+<!-- Bottom Delete Action -->
+<div class="pt-8 pb-12 flex justify-center">
+<button class="flex items-center gap-2 text-[#FF3B30] font-bold text-sm hover:opacity-70 transition-opacity active:scale-95 duration-150">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+                Delete Task
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-6 pb-8 pt-3 bg-[#353436]/70 backdrop-blur-xl z-50 rounded-t-[20px] shadow-[0px_-12px_32px_rgba(0,0,0,0.5)]">
+<a class="flex flex-col items-center justify-center bg-[#ADC6FF]/10 text-[#ADC6FF] rounded-full px-5 py-1.5 transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-['Inter'] text-[0.625rem] font-medium tracking-wide uppercase mt-1">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C1C6D7] opacity-60 hover:text-[#ADC6FF] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-['Inter'] text-[0.625rem] font-medium tracking-wide uppercase mt-1">Calendar</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C1C6D7] opacity-60 hover:text-[#ADC6FF] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="adjust">adjust</span>
+<span class="font-['Inter'] text-[0.625rem] font-medium tracking-wide uppercase mt-1">Focus</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#C1C6D7] opacity-60 hover:text-[#ADC6FF] transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Inter'] text-[0.625rem] font-medium tracking-wide uppercase mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

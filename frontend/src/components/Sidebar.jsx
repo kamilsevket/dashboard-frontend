@@ -1,25 +1,16 @@
 import { 
   Squares2X2Icon, 
-  CpuChipIcon, 
   FolderIcon, 
-  CodeBracketIcon,
-  WrenchScrewdriverIcon,
-  DevicePhoneMobileIcon,
-  CommandLineIcon,
+  SparklesIcon,
   ChevronLeftIcon,
-  ChevronRightIcon,
-  DocumentTextIcon
+  ChevronRightIcon
 } from '@heroicons/react/24/outline'
+import { APP_VERSION, APP_NAME } from '../version'
 
 const navItems = [
   { id: 'dashboard', icon: Squares2X2Icon, label: 'Overview' },
-  { id: 'agents', icon: CpuChipIcon, label: 'Agents' },
   { id: 'projects', icon: FolderIcon, label: 'Projects' },
-  { id: 'git', icon: CodeBracketIcon, label: 'Git' },
-  { id: 'xcode', icon: WrenchScrewdriverIcon, label: 'Build' },
-  { id: 'simulators', icon: DevicePhoneMobileIcon, label: 'Devices' },
-  { id: 'terminal', icon: CommandLineIcon, label: 'Terminal' },
-  { id: 'apidocs', icon: DocumentTextIcon, label: 'API Docs' },
+  { id: 'oneliner', icon: SparklesIcon, label: 'AI Creator' },
 ]
 
 export default function Sidebar({ view, setView, selectedProject, agents, agentStatus, activeTasks, collapsed, onToggle }) {
@@ -77,8 +68,8 @@ export default function Sidebar({ view, setView, selectedProject, agents, agentS
             <span className="text-white font-bold text-sm">⚡</span>
           </div>
           <div>
-            <span className="font-semibold text-sm">OpenClaw</span>
-            <p className="text-[10px] text-zinc-500">Factory</p>
+            <span className="font-semibold text-sm">{APP_NAME}</span>
+            <p className="text-[10px] text-zinc-500">v{APP_VERSION}</p>
           </div>
         </div>
         <button 

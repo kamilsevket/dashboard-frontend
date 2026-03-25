@@ -1,35 +1,24 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import Sidebar from './components/Sidebar'
 import Dashboard from './components/Dashboard'
-import Agents from './components/Agents'
-import Projects from './components/Projects'
-import ProjectDetail from './components/ProjectDetail'
-import Git from './components/Git'
-import Xcode from './components/Xcode'
-import Simulators from './components/Simulators'
-import Terminal from './components/Terminal'
-import Chat from './components/Chat'
 import OneLiner from './components/OneLiner'
 import Login from './components/Login'
-import ApiDocs from './components/ApiDocs'
 import PipelineView from './components/PipelineView'
 import ProjectWizard from './components/ProjectWizard'
 import { API, WS_URL, authFetch } from './config'
+import { APP_VERSION, APP_NAME } from './version'
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('dashboard_token'))
-  const [view, setView] = useState('oneliner')
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [selectedProject, setSelectedProject] = useState(null)
+  const [view, setView] = useState('dashboard')
+  const [sidebarOpen, setSidebarOpen] = useState(true)
   const [projects, setProjects] = useState([])
   const [agents, setAgents] = useState([])
   const [agentStatus, setAgentStatus] = useState({})
-  const [chatOpen, setChatOpen] = useState(false)
-  const [chatAgent, setChatAgent] = useState(null)
   const [logs, setLogs] = useState([])
   const [activeTasks, setActiveTasks] = useState([])
   
-  // Pipeline state - restore from localStorage
+  // Pipeline state
   const [activePipeline, setActivePipeline] = useState(() => {
     try {
       const saved = localStorage.getItem('activePipeline')
@@ -192,74 +181,57 @@ function App() {
   }
 
   const views = {
-    oneliner: (
-      <div className="h-full overflow-auto p-6">
-        <OneLiner 
-          onProjectCreated={(name) => {
-            fetchProjects()
-          }}
-          onViewProject={(name) => {
-            const project = projects.find(p => p.name === name) || { name, path: `${process.env.HOME || '~'}/clawd-main/dashboard/projects/${name}`, type: 'ios' }
-            setSelectedProject(project)
-            setView('project')
-          }}
-          onStartPipeline={() => setShowWizard(true)}
-          logs={logs}
-        />
+    dashboard: (
+      <div className="h-full flex flex-col">
+        {/* Header */}
+        <header className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
+          <div className="flex items-center gap-4">
+            <h1 className="text-xl font-bold text-white">{APP_NAME}</h1>
+            <span className="text-xs text-zinc-500 bg-zinc-800 px-2 py-1 rounded">v{APP_VERSION}</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowWizard(true)}
+              className="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors"
+            >
+              New Project
+            </button>
+            <button
+              onClick={() => setView('oneliner')}
+              className="px-3 py-1.5 bg-zinc-700 hover:bg-zinc-600 text-zinc-300 text-sm rounded-lg transition-colors"
+            >
+              Quick Start
+            </button>
+          </div>
+        </header>
         
-        <div className="mt-8 text-center">
-          <button
-            onClick={() => setView('dashboard')}
-            className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors"
-          >
-            View Full Dashboard →
-          </button>
-        </div>
+        {/* Dashboard Content */}
+        <Dashboard 
+          projects={projects} 
+          agents={agents}
+          agentStatus={agentStatus}
+          activeTasks={activeTasks}
+          logs={logs}
+          onSelectProject={(project) => {
+            // Open project details in modal
+            console.log('Selected project:', project)
+          }}
+          onSelectAgent={(agent) => {
+            // Open agent chat
+            console.log('Selected agent:', agent)
+          }}
+          onProjectCreated={fetchProjects}
+          onStartPipeline={() => setShowWizard(true)}
+          activePipeline={activePipeline}
+          onOpenPipeline={() => setActivePipeline(activePipeline)}
+        />
       </div>
     ),
-    dashboard: <Dashboard 
-      projects={projects} 
-      agents={agents}
-      agentStatus={agentStatus}
-      activeTasks={activeTasks}
-      logs={logs}
-      onSelectProject={openProject}
-      onSelectAgent={openChat}
-      onProjectCreated={(name) => {
-        fetchProjects()
-      }}
+    oneliner: <OneLiner 
+      onProjectCreated={fetchProjects}
       onStartPipeline={() => setShowWizard(true)}
-      activePipeline={activePipeline}
-      onOpenPipeline={() => setActivePipeline(activePipeline)}
-    />,
-    agents: <Agents 
-      agents={agents} 
-      agentStatus={agentStatus}
-      activeTasks={activeTasks}
-      onChat={openChat} 
-      onRefresh={fetchAgents} 
-    />,
-    projects: <Projects 
-      projects={projects} 
-      selected={selectedProject}
-      onSelect={openProject}
-      onRefresh={fetchProjects}
-      agents={agents}
-      onStartPipeline={() => setShowWizard(true)}
-    />,
-    project: <ProjectDetail 
-      project={selectedProject}
-      agents={agents}
-      agentStatus={agentStatus}
       logs={logs}
-      onBack={() => setView('projects')}
-      onChat={openChat}
     />,
-    git: <Git project={selectedProject} />,
-    xcode: <Xcode project={selectedProject} logs={logs} />,
-    simulators: <Simulators />,
-    terminal: <Terminal project={selectedProject} />,
-    apidocs: <ApiDocs />,
   }
 
   return (

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Task - Obsidian Gallery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#ffdad6",
+              "surface-container": "#201f20",
+              "tertiary-fixed-dim": "#ffb595",
+              "tertiary": "#ffb595",
+              "surface-container-highest": "#353436",
+              "error-container": "#93000a",
+              "on-tertiary": "#571e00",
+              "on-surface": "#e5e2e3",
+              "surface": "#131314",
+              "inverse-primary": "#005bc1",
+              "inverse-surface": "#e5e2e3",
+              "on-surface-variant": "#c1c6d7",
+              "on-primary-container": "#00285c",
+              "surface-variant": "#353436",
+              "secondary": "#adc6ff",
+              "primary": "#adc6ff",
+              "on-tertiary-fixed": "#351000",
+              "inverse-on-surface": "#313031",
+              "error": "#ffb4ab",
+              "surface-container-low": "#1c1b1c",
+              "on-error": "#690005",
+              "secondary-container": "#26467d",
+              "on-background": "#e5e2e3",
+              "surface-container-lowest": "#0e0e0f",
+              "surface-container-high": "#2a2a2b",
+              "surface-bright": "#3a393a",
+              "on-secondary": "#082f65",
+              "background": "#131314",
+              "primary-fixed-dim": "#adc6ff",
+              "on-tertiary-fixed-variant": "#7c2e00",
+              "tertiary-container": "#ef6719",
+              "surface-tint": "#adc6ff",
+              "primary-fixed": "#d8e2ff",
+              "on-secondary-fixed": "#001a41",
+              "on-primary-fixed": "#001a41",
+              "tertiary-fixed": "#ffdbcc",
+              "on-primary": "#002e69",
+              "outline": "#8b90a0",
+              "on-secondary-container": "#98b5f3",
+              "secondary-fixed": "#d8e2ff",
+              "outline-variant": "#414755",
+              "surface-dim": "#131314",
+              "secondary-fixed-dim": "#adc6ff",
+              "on-tertiary-container": "#4c1a00",
+              "on-secondary-fixed-variant": "#26467d",
+              "primary-container": "#4b8eff",
+              "on-primary-fixed-variant": "#004493"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        /* Custom scrollbar suppression */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface select-none overflow-hidden">
+<!-- Background Context (The "Home" Screen obscured) -->
+<div class="fixed inset-0 z-0 brightness-[0.3] scale-[0.98] origin-center blur-sm">
+<header class="flex items-center justify-between px-6 py-4 w-full bg-[#131314]">
+<span class="text-xl font-bold text-white">Tasks</span>
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</header>
+<main class="p-6 space-y-6">
+<div class="h-40 w-full bg-surface-container rounded-3xl"></div>
+<div class="space-y-4">
+<div class="h-16 w-full bg-surface-container-low rounded-2xl"></div>
+<div class="h-16 w-full bg-surface-container-low rounded-2xl"></div>
+<div class="h-16 w-full bg-surface-container-low rounded-2xl"></div>
+</div>
+</main>
+</div>
+<!-- Overlay Scrim -->
+<div class="fixed inset-0 bg-black/60 z-10"></div>
+<!-- Add Task Bottom Sheet -->
+<div class="fixed inset-x-0 bottom-0 z-50 flex flex-col max-h-[813px] bg-surface-container-low rounded-t-[32px] shadow-[0px_-12px_32px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-out translate-y-0">
+<!-- Drag Handle -->
+<div class="flex justify-center pt-3 pb-2">
+<div class="w-9 h-1 bg-outline-variant/40 rounded-full"></div>
+</div>
+<!-- Top App Bar Content (Internal to Sheet) -->
+<header class="bg-[#131314] font-['Inter'] font-bold text-lg tracking-tight w-full sticky top-0 z-50 flex items-center justify-between px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="text-[#C1C6D7] hover:bg-[#1C1B1C] transition-colors active:scale-95 duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">close</span>
+</button>
+<h1 class="text-[#ADC6FF]">Add Task</h1>
+</div>
+<button class="text-[#C1C6D7] hover:bg-[#1C1B1C] transition-colors active:scale-95 duration-200 p-2 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">more_horiz</span>
+</button>
+</header>
+<!-- Input Area -->
+<div class="px-6 pt-6 pb-2 space-y-4">
+<div class="relative">
+<textarea autofocus="" class="w-full bg-transparent border-none focus:ring-0 text-[18px] font-medium text-on-surface placeholder-outline/60 resize-none p-0 overflow-hidden" placeholder="What do you need to do?" rows="1"></textarea>
+</div>
+<!-- Date Badge (Conditional State) -->
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-[13px] font-semibold border border-primary/20">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                    Today
+                </div>
+</div>
+</div>
+<!-- Quick Actions Row -->
+<div class="px-4 py-2 flex items-center gap-1">
+<button class="w-11 h-11 flex items-center justify-center text-outline hover:text-on-surface-variant active:scale-90 transition-all">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+<button class="w-11 h-11 flex items-center justify-center text-outline hover:text-on-surface-variant active:scale-90 transition-all">
+<span class="material-symbols-outlined">flag</span>
+</button>
+<button class="w-11 h-11 flex items-center justify-center text-outline hover:text-on-surface-variant active:scale-90 transition-all">
+<span class="material-symbols-outlined">sell</span>
+</button>
+<button class="w-11 h-11 flex items-center justify-center text-outline hover:text-on-surface-variant active:scale-90 transition-all">
+<span class="material-symbols-outlined">alarm</span>
+</button>
+</div>
+<!-- Simulated Keyboard Spacer & Send Button -->
+<div class="mt-auto bg-[#0E0E0F] relative">
+<!-- Glassmorphism Action Bar -->
+<div class="flex justify-end p-4 border-t border-outline-variant/10">
+<button class="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-lg active:scale-90 transition-all duration-150">
+<span class="material-symbols-outlined text-on-primary font-bold text-3xl">arrow_upward</span>
+</button>
+</div>
+<!-- Fake iOS Keyboard Visual Hint -->
+<div class="w-full h-[300px] bg-[#161617] p-2 grid grid-cols-10 gap-1.5 opacity-40">
+<!-- Row 1 -->
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<!-- Row 2 -->
+<div class="col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<!-- Row 3 -->
+<div class="h-10 bg-surface-container-high rounded-lg col-span-1.5"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-1"></div>
+<div class="h-10 bg-surface-container-high rounded-lg col-span-1.5"></div>
+<!-- Row 4 -->
+<div class="h-10 bg-surface-container-high rounded-lg col-span-2"></div>
+<div class="h-10 bg-surface-container rounded-lg col-span-5"></div>
+<div class="h-10 bg-surface-container-high rounded-lg col-span-3"></div>
+</div>
+<!-- iOS Home Indicator -->
+<div class="flex justify-center pb-2 bg-[#161617]">
+<div class="w-32 h-1.5 bg-white/30 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Hidden Navigation Shell (Suppressed due to Task-Focus Rule) -->
+<!-- 
+    The BottomNavBar and TopAppBar from the Shared Components JSON are excluded 
+    from being the primary navigation shell here because the page intent is a 
+    focused modal journey ("Add Task" Bottom Sheet).
+    -->
+</body></html>
