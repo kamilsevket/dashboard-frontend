@@ -5,6 +5,7 @@ import OneLiner from './components/OneLiner'
 import Login from './components/Login'
 import PipelineView from './components/PipelineView'
 import ProjectWizard from './components/ProjectWizard'
+import Chat from './components/Chat'
 import { API, WS_URL, authFetch } from './config'
 import { APP_VERSION, APP_NAME } from './version'
 
@@ -17,6 +18,9 @@ function App() {
   const [agentStatus, setAgentStatus] = useState({})
   const [logs, setLogs] = useState([])
   const [activeTasks, setActiveTasks] = useState([])
+  const [selectedProject, setSelectedProject] = useState(null)
+  const [chatAgent, setChatAgent] = useState(null)
+  const [chatOpen, setChatOpen] = useState(false)
   
   // Pipeline state
   const [activePipeline, setActivePipeline] = useState(() => {
