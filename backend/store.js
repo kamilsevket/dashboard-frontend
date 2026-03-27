@@ -35,7 +35,7 @@ export async function init() {
       pipelines = JSON.parse(data);
     } catch { pipelines = []; }
     
-    console.log(`📦 Store loaded: ${activity.length} events, ${Object.keys(chats).length} chat threads`);
+    console.log(`📦 Store loaded: ${activity.length} events, ${Object.keys(chats).length} chat threads, ${pipelines.length} pipelines`);
   } catch (e) {
     console.error('Store init error:', e);
   }

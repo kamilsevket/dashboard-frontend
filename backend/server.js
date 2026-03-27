@@ -72,15 +72,10 @@ app.get('/api/health', (req, res) => {
 app.use('/api', authMiddleware);
 
 // ============================================================================
-// STATIC FILES (Frontend)
+// STATIC FILES (Frontend) - static assets only, SPA fallback at end of file
 // ============================================================================
 const STATIC_DIR = path.join(__dirname, 'dist');
 app.use(express.static(STATIC_DIR));
-
-// Serve index.html for all other routes (SPA)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(STATIC_DIR, 'index.html'));
-});
 
 // ============================================================================
 // CONFIG
@@ -945,24 +940,54 @@ app.post('/api/pipeline/start', async (req, res) => {
   runPipelineStage(pipeline.id);
 });
 
-// Get pipeline status
-app.get('/api/pipeline/:id', (req, res) => {
-  const pipeline = activePipelines.get(req.params.id);
-  if (!pipeline) {
-    return res.status(404).json({ error: 'Pipeline not found' });
+// Get active pipeline - MUST be before /:id route
+app.get('/api/pipeline/active', (req, res) => {
+  // First check in-memory pipelines
+  let active = Array.from(activePipelines.values()).find(p => p.status === 'running');
+  
+  // If not found in memory, check store
+  if (!active) {
+    active = store.getActivePipeline();
+    
+    // If found in store, load it back to memory
+    if (active) {
+      activePipelines.set(active.id, active);
+    }
   }
-  res.json(pipeline);
+  
+  res.json(active || null);
 });
 
 // Get all pipelines
 app.get('/api/pipelines', (req, res) => {
-  res.json(Array.from(activePipelines.values()));
+  // Merge in-memory and stored pipelines
+  const stored = store.getPipelines(100);
+  const inMemory = Array.from(activePipelines.values());
+  
+  // Combine, preferring in-memory versions
+  const pipelineMap = new Map();
+  stored.forEach(p => pipelineMap.set(p.id, p));
+  inMemory.forEach(p => pipelineMap.set(p.id, p));
+  
+  res.json(Array.from(pipelineMap.values()));
 });
 
-// Get active pipeline
-app.get('/api/pipeline/active', (req, res) => {
-  const active = Array.from(activePipelines.values()).find(p => p.status === 'running');
-  res.json(active || null);
+// Get pipeline status by ID
+app.get('/api/pipeline/:id', (req, res) => {
+  let pipeline = activePipelines.get(req.params.id);
+  
+  // If not in memory, check store
+  if (!pipeline) {
+    pipeline = store.getPipeline(req.params.id);
+    if (pipeline) {
+      activePipelines.set(pipeline.id, pipeline);
+    }
+  }
+  
+  if (!pipeline) {
+    return res.status(404).json({ error: 'Pipeline not found' });
+  }
+  res.json(pipeline);
 });
 
 // Pause pipeline
@@ -1448,6 +1473,13 @@ app.post('/api/wizard/analyze', async (req, res) => {
   broadcast('agent:status', { agent: 'pm', status: 'idle' });
   
   res.json({ features, screens });
+});
+
+// ============================================================================
+// SPA FALLBACK - Must be AFTER all API routes
+// ============================================================================
+app.get('*', (req, res) => {
+  res.sendFile(path.join(STATIC_DIR, 'index.html'));
 });
 
 // ============================================================================
