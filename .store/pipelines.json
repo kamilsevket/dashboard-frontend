@@ -1108,5 +1108,237 @@
         "message": "⏸️ Waiting for design review..."
       }
     ]
+  },
+  {
+    "id": "9c26857f-eb21-48fe-a657-b58751d8c3db",
+    "projectName": "Alarmie",
+    "status": "running",
+    "currentStage": "review",
+    "createdAt": "2026-03-27T06:47:09.780Z",
+    "updatedAt": "2026-03-27T06:47:09.780Z",
+    "config": {
+      "appDescription": "An alarm app when user did not wake up have to pay a price\n",
+      "features": [
+        "Dark Mode",
+        "Push Notifications",
+        "Haptic Feedback",
+        "Widgets",
+        "Live Activities"
+      ],
+      "screens": [
+        {
+          "name": "Home",
+          "description": "Main landing screen with key features"
+        },
+        {
+          "name": "Settings",
+          "description": "App settings and preferences"
+        }
+      ]
+    },
+    "design": {
+      "stitchProjectId": "275428046446057767",
+      "screens": [
+        {
+          "name": "Home",
+          "description": "Dark theme main screen (#09090B background). Top: 'Alarmie' logo text in white with small flame icon, wallet balance pill on right showing '$12.50' in green. Center focus: large circular ring showing next alarm time '06:30' in bold white 48px font, 'Tomorrow' label below in gray. Stake amount displayed beneath: '$1.00 at risk' in orange (#F97316). Below circle: horizontal scroll of upcoming alarm cards with dark gray (#18181B) backgrounds showing time, days active, and stake amount. Bottom floating button: large rounded rectangle 'Set New Alarm' in accent orange with white text. Tab bar: Home (active), History, Settings icons.",
+          "status": "ready",
+          "screenshot": "/static/projects/Alarmie/designs/Home.png",
+          "html": "/static/projects/Alarmie/designs/Home.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Set Alarm",
+          "description": "Dark theme full screen (#09090B). Top navigation: 'Cancel' text left, 'New Alarm' title center, 'Save' in orange right. Large time picker: spinning drum style with hours and minutes in white, AM/PM selector, dark selection highlight bar. Below picker in card sections (#18181B, 12px radius): 'Repeat' row with weekday letter circles (M T W T F S S) - tap to toggle, selected in orange fill. 'Stake Amount' section: horizontal slider from $0.50 to $5.00 with orange track, current value '$1.00' displayed large. 'Wake Challenge' row with chevron showing selected challenge type. 'Sound' row with alarm tone name. 'Label' text field for alarm name. Live Activity preview card at bottom showing how notification will appear.",
+          "status": "ready",
+          "screenshot": "/static/projects/Alarmie/designs/Set_Alarm.png",
+          "html": "/static/projects/Alarmie/designs/Set_Alarm.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Wake Challenge",
+          "description": "Full screen dark overlay when alarm fires. Bright orange pulsing border indicates urgency. Top: current time large '06:30' with 'WAKE UP!' flashing text. Stake warning: '$1.00 will be charged in 2:45' with countdown timer in red. Challenge area center: math problem displayed '24 × 7 = ?' with number pad below for input, or shake progress bar showing '0/50 shakes', or QR scan viewfinder. Wrong answer feedback: screen flashes red briefly, haptic buzz. Progress indicator shows challenge completion percentage. Emergency snooze button at bottom: 'Snooze (+$0.50)' indicating additional stake for snooze. Screen brightness forced to maximum.",
+          "status": "ready",
+          "screenshot": "/static/projects/Alarmie/designs/Wake_Challenge.png",
+          "html": "/static/projects/Alarmie/designs/Wake_Challenge.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Wallet",
+          "description": "Dark theme screen (#09090B). Top: 'Wallet' title large white, info icon. Balance card: large gradient card (dark gray to slightly lighter) showing 'Available Balance' label, '$12.50' in large green text, 'Add Funds' button in outline style. Stats section below: 'This Month' header, three metric cards in row - 'Saved' in green showing money kept, 'Lost' in red showing penalties paid, 'Wake Rate' showing percentage with circular progress. Transaction history list: dark cards showing date, alarm time, and outcome ('+$1.00 Saved' in green or '-$1.00 Penalty' in red). Filter chips: 'All', 'Saved', 'Penalties'. Empty state for new users with illustration.",
+          "status": "ready",
+          "screenshot": "/static/projects/Alarmie/designs/Wallet.png",
+          "html": "/static/projects/Alarmie/designs/Wallet.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "History",
+          "description": "Dark theme screen (#09090B). Top: 'History' title, calendar icon button to jump to date. Monthly calendar view: compact calendar grid with dots indicating alarm days - green dots for successful wakes, red for penalties, gray for upcoming. Below calendar: 'March 2026' section header with stats summary (15 wakes, 2 misses, $13.00 saved). Daily entries list: cards showing date, alarm time, wake time, time difference ('+3 min'), challenge completed, and money saved/lost. Tap card to expand showing detailed metrics: time to dismiss, snoozes used, challenge attempts. Streak indicator: flame icon with '12 day streak' badge.",
+          "status": "ready",
+          "screenshot": "/static/projects/Alarmie/designs/History.png",
+          "html": "/static/projects/Alarmie/designs/History.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Settings",
+          "description": "Dark theme settings (#09090B). Grouped sections with dark cards (#18181B). Section 'Alarm Defaults': default stake amount stepper, default challenge type picker, sound selection row. Section 'Stakes': 'Payment Method' row showing card ending in 4242, 'Auto-reload' toggle with threshold amount, 'Withdrawal' row to cash out balance. Section 'Challenges': toggle rows for each challenge type (Math, Shake, QR Scan, Photo) to enable/disable, difficulty selector (Easy/Medium/Hard). Section 'Notifications': Live Activity toggle, critical alerts toggle, haptic intensity slider. Section 'Widgets': preview of available widget sizes with 'Add Widget' instruction text. iCloud sync status indicator at bottom.",
+          "status": "ready",
+          "screenshot": "/static/projects/Alarmie/designs/Settings.png",
+          "html": "/static/projects/Alarmie/designs/Settings.html",
+          "feedback": null,
+          "version": 1
+        },
+        {
+          "name": "Widget Preview",
+          "description": "Dark widget designs for home screen. Small widget (square): next alarm time '06:30' large, stake amount '$1.00' in orange below, app icon corner. Medium widget (rectangular): shows next 2 alarms with times and days, total daily stake, current streak flame badge. Large widget: weekly view showing all set alarms as timeline, daily success indicators (checkmarks/X), week's savings total in green. Lock screen widget: minimal showing just next alarm time and stake. Live Activity (Dynamic Island): expanded shows alarm time, countdown, stake amount; compact shows clock icon and time; minimal shows just alarm indicator.",
+          "status": "ready",
+          "screenshot": "/static/projects/Alarmie/designs/Widget_Preview.png",
+          "html": "/static/projects/Alarmie/designs/Widget_Preview.html",
+          "feedback": null,
+          "version": 1
+        }
+      ],
+      "reviewStatus": "pending"
+    },
+    "development": {
+      "status": "scaffold",
+      "xcodeProject": "/Users/kamil/Developer/clawProjects/Alarmie/Alarmie.xcodeproj",
+      "implementedScreens": [],
+      "buildStatus": "pending"
+    },
+    "testing": {
+      "status": "pending",
+      "unitTests": {
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      "uiTests": {
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      }
+    },
+    "screenshots": {
+      "status": "pending",
+      "images": []
+    },
+    "logs": [
+      {
+        "timestamp": "2026-03-27T06:47:09.782Z",
+        "source": "pm",
+        "message": "📋 PM analyzing app idea..."
+      },
+      {
+        "timestamp": "2026-03-27T06:47:57.682Z",
+        "source": "pm",
+        "message": "✅ Identified 7 screens"
+      },
+      {
+        "timestamp": "2026-03-27T06:47:57.683Z",
+        "source": "designer",
+        "message": "🎨 Starting design generation..."
+      },
+      {
+        "timestamp": "2026-03-27T06:47:57.685Z",
+        "source": "ios-dev",
+        "message": "🍎 Creating iOS project with XcodeGen..."
+      },
+      {
+        "timestamp": "2026-03-27T06:47:58.013Z",
+        "source": "ios-dev",
+        "message": "✅ Created: Alarmie.xcodeproj"
+      },
+      {
+        "timestamp": "2026-03-27T06:47:58.013Z",
+        "source": "ios-dev",
+        "message": "📁 Path: /Users/kamil/Developer/clawProjects/Alarmie"
+      },
+      {
+        "timestamp": "2026-03-27T06:48:00.958Z",
+        "source": "designer",
+        "message": "🎨 Generating: Home..."
+      },
+      {
+        "timestamp": "2026-03-27T06:49:34.946Z",
+        "source": "designer",
+        "message": "✅ Home design ready"
+      },
+      {
+        "timestamp": "2026-03-27T06:49:34.947Z",
+        "source": "designer",
+        "message": "🎨 Generating: Set Alarm..."
+      },
+      {
+        "timestamp": "2026-03-27T06:50:45.650Z",
+        "source": "designer",
+        "message": "✅ Set Alarm design ready"
+      },
+      {
+        "timestamp": "2026-03-27T06:50:45.651Z",
+        "source": "designer",
+        "message": "🎨 Generating: Wake Challenge..."
+      },
+      {
+        "timestamp": "2026-03-27T06:51:58.369Z",
+        "source": "designer",
+        "message": "✅ Wake Challenge design ready"
+      },
+      {
+        "timestamp": "2026-03-27T06:51:58.371Z",
+        "source": "designer",
+        "message": "🎨 Generating: Wallet..."
+      },
+      {
+        "timestamp": "2026-03-27T06:53:11.645Z",
+        "source": "designer",
+        "message": "✅ Wallet design ready"
+      },
+      {
+        "timestamp": "2026-03-27T06:53:11.646Z",
+        "source": "designer",
+        "message": "🎨 Generating: History..."
+      },
+      {
+        "timestamp": "2026-03-27T06:54:32.471Z",
+        "source": "designer",
+        "message": "✅ History design ready"
+      },
+      {
+        "timestamp": "2026-03-27T06:54:32.473Z",
+        "source": "designer",
+        "message": "🎨 Generating: Settings..."
+      },
+      {
+        "timestamp": "2026-03-27T06:56:03.961Z",
+        "source": "designer",
+        "message": "✅ Settings design ready"
+      },
+      {
+        "timestamp": "2026-03-27T06:56:03.963Z",
+        "source": "designer",
+        "message": "🎨 Generating: Widget Preview..."
+      },
+      {
+        "timestamp": "2026-03-27T06:57:40.300Z",
+        "source": "designer",
+        "message": "✅ Widget Preview design ready"
+      },
+      {
+        "timestamp": "2026-03-27T06:57:40.301Z",
+        "source": "designer",
+        "message": "✅ All designs generated"
+      },
+      {
+        "timestamp": "2026-03-27T06:57:40.302Z",
+        "source": "review",
+        "message": "⏸️ Waiting for design review..."
+      }
+    ]
   }
 ]

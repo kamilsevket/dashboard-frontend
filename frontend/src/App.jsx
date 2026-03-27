@@ -40,52 +40,115 @@ function App() {
     }
   }, [activePipeline])
 
-  if (!token) {
-    return <Login onLogin={(t) => setToken(t)} />
-  }
-
+  // Fetch data and setup WebSocket when authenticated
   useEffect(() => {
-    fetchProjects()
-    fetchAgents()
-    fetchActivity()
-    fetchActivePipeline()
+    if (!token) return
+    
+    let ws = null
 
-    const ws = new WebSocket(WS_URL)
+    const loadData = async () => {
+      try {
+        // Fetch projects
+        const projRes = await authFetch(`${API}/projects`)
+        if (projRes.ok) {
+          const projData = await projRes.json()
+          setProjects(projData)
+        }
+        
+        // Fetch agents
+        const agentRes = await authFetch(`${API}/agents`)
+        if (agentRes.ok) {
+          const agentData = await agentRes.json()
+          setAgents(agentData)
+          const status = {}
+          agentData.forEach(a => { status[a.id] = { agent: a.id, status: 'idle' } })
+          setAgentStatus(status)
+        }
+        
+        // Fetch activity
+        const actRes = await authFetch(`${API}/activity?limit=200`)
+        if (actRes.ok) {
+          const actData = await actRes.json()
+          setLogs(actData.map(d => ({ ...d, time: d.time })))
+        }
+        
+        // Fetch active pipeline
+        const savedId = localStorage.getItem('activePipeline')
+        let pipelineId = null
+        
+        if (savedId) {
+          try {
+            pipelineId = JSON.parse(savedId)?.id
+          } catch {
+            // ignore
+          }
+        }
+        
+        if (pipelineId) {
+          const pipeRes = await authFetch(`${API}/pipeline/${pipelineId}`)
+          if (pipeRes.ok) {
+            const pipeData = await pipeRes.json()
+            if (pipeData && pipeData.id) {
+              setActivePipeline(pipeData)
+              return
+            }
+          }
+        }
+        
+        const activeRes = await authFetch(`${API}/pipeline/active`)
+        if (activeRes.ok) {
+          const activeData = await activeRes.json()
+          if (activeData && activeData.id) {
+            setActivePipeline(activeData)
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load data:', e)
+      }
+    }
+
+    loadData()
+
+    // Setup WebSocket
+    ws = new WebSocket(WS_URL)
     
     ws.onopen = () => {
       console.log('WebSocket connected')
     }
     
     ws.onmessage = (e) => {
-      const { type, data } = JSON.parse(e.data)
-      
-      if (type === 'log') {
-        setLogs(prev => [...prev.slice(-200), { ...data, time: Date.now() }])
-      }
-      
-      if (type === 'agent_status' || type === 'agent:status') {
-        setAgentStatus(prev => ({ ...prev, [data.agent]: data }))
-      }
-      
-      if (type === 'task') {
-        if (data.done) {
-          setActiveTasks(prev => prev.filter(t => t.id !== data.id))
-        } else {
-          setActiveTasks(prev => {
-            const exists = prev.find(t => t.id === data.id)
-            if (exists) return prev.map(t => t.id === data.id ? data : t)
-            return [...prev, data]
-          })
+      try {
+        const { type, data } = JSON.parse(e.data)
+        
+        if (type === 'log') {
+          setLogs(prev => [...prev.slice(-200), { ...data, time: Date.now() }])
         }
-      }
-      
-      // Pipeline events
-      if (type === 'pipeline:created') {
-        setActivePipeline(data)
-      }
-      
-      if (type === 'pipeline:complete' || type === 'pipeline:error') {
-        fetchProjects()
+        
+        if (type === 'agent_status' || type === 'agent:status') {
+          setAgentStatus(prev => ({ ...prev, [data.agent]: data }))
+        }
+        
+        if (type === 'task') {
+          if (data.done) {
+            setActiveTasks(prev => prev.filter(t => t.id !== data.id))
+          } else {
+            setActiveTasks(prev => {
+              const exists = prev.find(t => t.id === data.id)
+              if (exists) return prev.map(t => t.id === data.id ? data : t)
+              return [...prev, data]
+            })
+          }
+        }
+        
+        if (type === 'pipeline:created') {
+          setActivePipeline(data)
+        }
+        
+        if (type === 'pipeline:complete' || type === 'pipeline:error') {
+          loadData()
+        }
+      } catch (err) {
+        console.error('WS message error:', err)
       }
     }
     
@@ -93,10 +156,13 @@ function App() {
       console.log('WebSocket disconnected')
     }
     
-    return () => ws.close()
-  }, [])
+    return () => {
+      if (ws) ws.close()
+    }
+  }, [token])
 
-  const fetchProjects = async () => {
+  // Refresh projects function for child components
+  const refreshProjects = async () => {
     try {
       const res = await authFetch(`${API}/projects`)
       if (res.ok) setProjects(await res.json())
@@ -105,78 +171,9 @@ function App() {
     }
   }
 
-  const fetchAgents = async () => {
-    try {
-      const res = await authFetch(`${API}/agents`)
-      if (res.ok) {
-        const data = await res.json()
-        setAgents(data)
-        const status = {}
-        data.forEach(a => { status[a.id] = { agent: a.id, status: 'idle' } })
-        setAgentStatus(status)
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  const fetchActivity = async () => {
-    try {
-      const res = await authFetch(`${API}/activity?limit=200`)
-      if (res.ok) {
-        const data = await res.json()
-        setLogs(data.map(d => ({ ...d, time: d.time })))
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  const fetchActivePipeline = async () => {
-    try {
-      // First check localStorage
-      const savedId = localStorage.getItem('activePipeline')
-      let pipelineId = null
-      
-      if (savedId) {
-        try {
-          pipelineId = JSON.parse(savedId)?.id
-        } catch {}
-      }
-      
-      // If we have a saved pipeline, fetch its latest state
-      if (pipelineId) {
-        const res = await authFetch(`${API}/pipeline/${pipelineId}`)
-        if (res.ok) {
-          const data = await res.json()
-          if (data && data.id) {
-            setActivePipeline(data)
-            return
-          }
-        }
-      }
-      
-      // Otherwise check for any active pipeline
-      const res = await authFetch(`${API}/pipeline/active`)
-      if (res.ok) {
-        const data = await res.json()
-        if (data && data.id) {
-          setActivePipeline(data)
-        }
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  const openChat = (agent) => {
-    setChatAgent(agent)
-    setChatOpen(true)
-  }
-
-  const openProject = (project) => {
-    setSelectedProject(project)
-    setView('project')
+  // Show login if not authenticated
+  if (!token) {
+    return <Login onLogin={(t) => setToken(t)} />
   }
 
   const handlePipelineStart = (pipeline) => {
@@ -217,14 +214,13 @@ function App() {
           activeTasks={activeTasks}
           logs={logs}
           onSelectProject={(project) => {
-            // Open project details in modal
-            console.log('Selected project:', project)
+            setSelectedProject(project)
           }}
           onSelectAgent={(agent) => {
-            // Open agent chat
-            console.log('Selected agent:', agent)
+            setChatAgent(agent)
+            setChatOpen(true)
           }}
-          onProjectCreated={fetchProjects}
+          onProjectCreated={refreshProjects}
           onStartPipeline={() => setShowWizard(true)}
           activePipeline={activePipeline}
           onOpenPipeline={() => setActivePipeline(activePipeline)}
@@ -232,7 +228,7 @@ function App() {
       </div>
     ),
     oneliner: <OneLiner 
-      onProjectCreated={fetchProjects}
+      onProjectCreated={refreshProjects}
       onStartPipeline={() => setShowWizard(true)}
       logs={logs}
     />,
@@ -277,7 +273,7 @@ function App() {
         <PipelineView
           pipeline={activePipeline}
           onClose={() => setActivePipeline(null)}
-          onRefresh={fetchProjects}
+          onRefresh={refreshProjects}
         />
       )}
     </div>
